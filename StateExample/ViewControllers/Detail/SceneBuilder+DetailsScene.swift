@@ -11,9 +11,9 @@ import Foundation
 extension SceneBuilder {
     func sceneItemDetails(item: MockBackendItem) -> DetailViewController {
         let viewController = DetailViewController()
-        let viewModel = DetailViewModel(item: item) { [weak viewController] state in
+        let viewModel = DetailViewModel(item: item, stateHandler: { [weak viewController] state in
             viewController?.state = state
-        }
+        })
         viewController.viewModel = viewModel
         return viewController
     }

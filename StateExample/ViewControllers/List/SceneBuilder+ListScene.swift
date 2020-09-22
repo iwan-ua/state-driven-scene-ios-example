@@ -11,9 +11,9 @@ import Foundation
 extension SceneBuilder {
     func sceneListOfItems() -> ListViewController {
         let viewController = ListViewController()
-        let viewModel = ListViewModel(dataReceiver: MockDataReceiver()) { [weak viewController] state in
+        let viewModel = ListViewModel(dataReceiver: MockDataReceiver(), stateHandler: { [weak viewController] state in
             viewController?.state = state
-        }
+        })
         viewController.viewModel = viewModel
         return viewController
     }
