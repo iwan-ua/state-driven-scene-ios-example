@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController" customModule="StateExample" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="kfQ-wR-lTO" id="xI8-B8-sHf"/>
                 <outlet property="buyButton" destination="Ijo-r4-Ef7" id="Op5-By-Ziw"/>
                 <outlet property="createdLabel" destination="NV0-9L-Wxi" id="14A-vc-rRn"/>
                 <outlet property="currencyLabel" destination="Ohd-fH-lWk" id="yAF-gq-C6n"/>
@@ -48,16 +49,21 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ijo-r4-Ef7">
-                    <rect key="frame" x="184" y="802" width="46" height="30"/>
+                    <rect key="frame" x="178" y="796" width="58" height="36"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <state key="normal" title="Button"/>
                     <connections>
                         <action selector="didTapBuy:" destination="-1" eventType="touchUpInside" id="m2y-ht-cqL"/>
                     </connections>
                 </button>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="kfQ-wR-lTO">
+                    <rect key="frame" x="188.5" y="795.5" width="37" height="37"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Ijo-r4-Ef7" secondAttribute="bottom" constant="30" id="06k-Qf-g32"/>
+                <constraint firstItem="kfQ-wR-lTO" firstAttribute="centerX" secondItem="Ijo-r4-Ef7" secondAttribute="centerX" id="IBI-p1-IbG"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="NV0-9L-Wxi" secondAttribute="trailing" constant="20" id="WfN-dE-xCN"/>
                 <constraint firstItem="RhZ-9Q-0Tr" firstAttribute="bottom" secondItem="Ohd-fH-lWk" secondAttribute="bottom" constant="10" id="Yid-aR-Vch"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4BI-be-GYI" secondAttribute="trailing" constant="20" id="Zlj-3k-p16"/>
@@ -67,6 +73,7 @@
                 <constraint firstItem="NV0-9L-Wxi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="djz-Ii-YRX"/>
                 <constraint firstItem="4BI-be-GYI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="fnw-EI-w7D"/>
                 <constraint firstItem="RhZ-9Q-0Tr" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="hx8-Ox-gUp"/>
+                <constraint firstItem="kfQ-wR-lTO" firstAttribute="centerY" secondItem="Ijo-r4-Ef7" secondAttribute="centerY" id="ijW-0W-P4K"/>
                 <constraint firstItem="Ijo-r4-Ef7" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="j94-G2-lpl"/>
                 <constraint firstItem="RhZ-9Q-0Tr" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="kwJ-J7-xDf"/>
                 <constraint firstItem="Ohd-fH-lWk" firstAttribute="leading" secondItem="RhZ-9Q-0Tr" secondAttribute="leading" constant="10" id="uzj-9r-yVu"/>

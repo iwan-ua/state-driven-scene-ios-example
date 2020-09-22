@@ -24,9 +24,10 @@ final class DetailViewController: BaseViewController {
         let currencyTo: String
         let buyRate: Double
         let sellRate: Double
-        let buyAction: () -> Void
+        let balance: Int
+        let buyAction: (@escaping () -> Void) -> Void
 
-        static let empty = State(created: Date(), currencyFrom: "", currencyTo: "", buyRate: 0, sellRate: 0, buyAction: {})
+        static let empty = State(created: Date(), currencyFrom: "", currencyTo: "", buyRate: 0, sellRate: 0, balance: 0, buyAction: { _ in })
     }
 
     // MARK: - Outlets
@@ -35,6 +36,7 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var descriptionLabel: UILabel!
     @IBOutlet private var buyButton: UIButton!
+    @IBOutlet private var activityIndicator: UIActivityIndicatorView!
 
     // MARK: - Properties
     var state: State = .empty {
@@ -57,7 +59,7 @@ final class DetailViewController: BaseViewController {
     override func reloadState() {
         guard isViewLoaded else { return }
         createdLabel.text = .init(format: Constants.textCreatedOn, dateFormatter.string(from: state.created))
-        currencyLabel.text = state.currencyTo
+        currencyLabel.text = "\(state.balance) " + state.currencyTo
         buyButton.setTitle(Constants.buyButtonTitle, for: .normal)
         descriptionLabel.text = .init(format: Constants.textDescription,
                                       state.buyRate.roundedString,
@@ -74,7 +76,12 @@ final class DetailViewController: BaseViewController {
     }
 
     @IBAction private func didTapBuy(_ sender: Any) {
-        state.buyAction()
+        buyButton.isHidden = true
+        activityIndicator.startAnimating()
+        state.buyAction { [weak self] in
+            self?.activityIndicator.stopAnimating()
+            self?.buyButton.isHidden = false
+        }
     }
 }
 
@@ -113,7 +120,7 @@ struct DetailViewControllerPreviews: PreviewProvider {
 
     static func testView() -> DetailViewController {
         let view = DetailViewController()
-        view.state = .init(created: Date(), currencyFrom: "USD", currencyTo: "EUR", buyRate: 1.15, sellRate: 1.14, buyAction: {})
+        view.state = .init(created: Date(), currencyFrom: "USD", currencyTo: "EUR", buyRate: 1.15, sellRate: 1.14, balance: 0, buyAction: { _ in })
         return view
     }
 }

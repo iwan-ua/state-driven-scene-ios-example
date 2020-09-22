@@ -16,7 +16,7 @@ class DetailViewModel {
     private let stateHandler: StateHandler
     private let item: MockBackendItem
 
-    private var boughtTimes: Double = 0
+    private var balance: Int = 0
 
     // MARK: - Initialization Methods
     init(item: MockBackendItem, stateHandler: @escaping StateHandler) {
@@ -29,17 +29,20 @@ class DetailViewModel {
     private func generateState() {
         // Here UI State and Back End Object are not much different
         // But in real project this place could have complex calculations
-        let rateCorrectionCoeficient = 1 + (boughtTimes / 100)
         stateHandler(.init(created: item.created,
                            currencyFrom: item.currencyFrom,
                            currencyTo: item.currencyTo,
-                           buyRate: item.buyRate * rateCorrectionCoeficient,
-                           sellRate: item.sellRate * rateCorrectionCoeficient,
+                           buyRate: item.buyRate,
+                           sellRate: item.sellRate,
+                           balance: balance,
                            buyAction: didTapBuy))
     }
 
-    private func didTapBuy() {
-        boughtTimes += 1
-        generateState()
+    private func didTapBuy(completion: @escaping () -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.balance += 1
+            self?.generateState()
+            completion()
+        }
     }
 }
