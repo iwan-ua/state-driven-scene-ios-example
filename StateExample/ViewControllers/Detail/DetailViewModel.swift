@@ -16,6 +16,8 @@ class DetailViewModel {
     private let stateHandler: StateHandler
     private let item: MockBackendItem
 
+    private var boughtTimes: Double = 0
+
     // MARK: - Initialization Methods
     init(item: MockBackendItem, stateHandler: @escaping StateHandler) {
         self.item = item
@@ -27,10 +29,17 @@ class DetailViewModel {
     private func generateState() {
         // Here UI State and Back End Object are not much different
         // But in real project this place could have complex calculations
+        let rateCorrectionCoeficient = 1 + (boughtTimes / 100)
         stateHandler(.init(created: item.created,
                            currencyFrom: item.currencyFrom,
                            currencyTo: item.currencyTo,
-                           buyRate: item.buyRate,
-                           sellRate: item.sellRate))
+                           buyRate: item.buyRate * rateCorrectionCoeficient,
+                           sellRate: item.sellRate * rateCorrectionCoeficient,
+                           buyAction: didTapBuy))
+    }
+
+    private func didTapBuy() {
+        boughtTimes += 1
+        generateState()
     }
 }

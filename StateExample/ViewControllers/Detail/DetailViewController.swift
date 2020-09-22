@@ -14,6 +14,7 @@ final class DetailViewController: BaseViewController {
         static let title = "Details of %@"
         static let textCreatedOn = "Updated on %@"
         static let textDescription = "Buy for %@ %@\nSell for %@ %@"
+        static let buyButtonTitle = "Buy"
     }
 
     // MARK: - State Declaration
@@ -23,8 +24,9 @@ final class DetailViewController: BaseViewController {
         let currencyTo: String
         let buyRate: Double
         let sellRate: Double
+        let buyAction: () -> Void
 
-        static let empty = State(created: Date(), currencyFrom: "", currencyTo: "", buyRate: 0, sellRate: 0)
+        static let empty = State(created: Date(), currencyFrom: "", currencyTo: "", buyRate: 0, sellRate: 0, buyAction: {})
     }
 
     // MARK: - Outlets
@@ -32,6 +34,7 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private var currencyLabel: UILabel!
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var descriptionLabel: UILabel!
+    @IBOutlet private var buyButton: UIButton!
 
     // MARK: - Properties
     var state: State = .empty {
@@ -55,7 +58,7 @@ final class DetailViewController: BaseViewController {
         guard isViewLoaded else { return }
         createdLabel.text = .init(format: Constants.textCreatedOn, dateFormatter.string(from: state.created))
         currencyLabel.text = state.currencyTo
-        imageView.backgroundColor = .systemTeal
+        buyButton.setTitle(Constants.buyButtonTitle, for: .normal)
         descriptionLabel.text = .init(format: Constants.textDescription,
                                       state.buyRate.roundedString,
                                       state.currencyFrom,
@@ -67,6 +70,11 @@ final class DetailViewController: BaseViewController {
     // MARK: - Private Methods
     private func setupImageView() {
         imageView.layer.cornerRadius = imageView.bounds.size.height / 2
+        imageView.backgroundColor = .systemTeal
+    }
+
+    @IBAction private func didTapBuy(_ sender: Any) {
+        state.buyAction()
     }
 }
 
@@ -105,7 +113,7 @@ struct DetailViewControllerPreviews: PreviewProvider {
 
     static func testView() -> DetailViewController {
         let view = DetailViewController()
-        view.state = .init(created: Date(), currencyFrom: "USD", currencyTo: "EUR", buyRate: 1.15, sellRate: 1.14)
+        view.state = .init(created: Date(), currencyFrom: "USD", currencyTo: "EUR", buyRate: 1.15, sellRate: 1.14, buyAction: {})
         return view
     }
 }
